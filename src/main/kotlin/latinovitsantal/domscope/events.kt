@@ -1,0 +1,70 @@
+package latinovitsantal.domscope
+import org.w3c.dom.DragEvent
+import org.w3c.dom.events.*
+import org.w3c.dom.pointerevents.PointerEvent
+import org.w3c.xhr.ProgressEvent
+
+fun DomScope.onAbort(handler: (Event) -> Unit) { element.onabort = element.onabort?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onBlur(handler: (FocusEvent) -> Unit) { element.onblur = element.onblur?.let { { e: FocusEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onCancel(handler: (Event) -> Unit) { element.oncancel = element.oncancel?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onChange(handler: (Event) -> Unit) { element.onchange = element.onchange?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onClick(handler: (MouseEvent) -> Unit) { element.onclick = element.onclick?.let { { e: MouseEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onClose(handler: (Event) -> Unit) { element.onclose = element.onclose?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onContextMenu(handler: (MouseEvent) -> Unit) { element.oncontextmenu = element.oncontextmenu?.let { { e: MouseEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onCueChange(handler: (Event) -> Unit) { element.oncuechange = element.oncuechange?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onDblClick(handler: (MouseEvent) -> Unit) { element.ondblclick = element.ondblclick?.let { { e: MouseEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onDrag(handler: (DragEvent) -> Unit) { element.ondrag = element.ondrag?.let { { e: DragEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onDragEnd(handler: (DragEvent) -> Unit) { element.ondragend = element.ondragend?.let { { e: DragEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onDragEnter(handler: (DragEvent) -> Unit) { element.ondragenter = element.ondragenter?.let { { e: DragEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onDragExit(handler: (DragEvent) -> Unit) { element.ondragexit = element.ondragexit?.let { { e: DragEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onDragLeave(handler: (DragEvent) -> Unit) { element.ondragleave = element.ondragleave?.let { { e: DragEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onDragOver(handler: (DragEvent) -> Unit) { element.ondragover = element.ondragover?.let { { e: DragEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onDragStart(handler: (DragEvent) -> Unit) { element.ondragstart = element.ondragstart?.let { { e: DragEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onDrop(handler: (DragEvent) -> Unit) { element.ondrop = element.ondrop?.let { { e: DragEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onDurationChange(handler: (Event) -> Unit) { element.ondurationchange = element.ondurationchange?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onEmptied(handler: (Event) -> Unit) { element.onemptied = element.onemptied?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onEnded(handler: (Event) -> Unit) { element.onended = element.onended?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onFocus(handler: (FocusEvent) -> Unit) { element.onfocus = element.onfocus?.let { { e: FocusEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onInput(handler: (InputEvent) -> Unit) { element.oninput = element.oninput?.let { { e: InputEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onInvalid(handler: (Event) -> Unit) { element.oninvalid = element.oninvalid?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onLoad(handler: (Event) -> Unit) { element.onload = element.onload?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onLoadedData(handler: (Event) -> Unit) { element.onloadeddata = element.onloadeddata?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onLoadedMetadata(handler: (Event) -> Unit) { element.onloadedmetadata = element.onloadedmetadata?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onLoadEnd(handler: (Event) -> Unit) { element.onloadend = element.onloadend?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onLoadStart(handler: (ProgressEvent) -> Unit) { element.onloadstart = element.onloadstart?.let { { e: ProgressEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onMouseDown(handler: (MouseEvent) -> Unit) { element.onmousedown = element.onmousedown?.let { { e: MouseEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onMouseEnter(handler: (MouseEvent) -> Unit) { element.onmouseenter = element.onmouseenter?.let { { e: MouseEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onMouseLeave(handler: (MouseEvent) -> Unit) { element.onmouseleave = element.onmouseleave?.let { { e: MouseEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onMouseMove(handler: (MouseEvent) -> Unit) { element.onmousemove = element.onmousemove?.let { { e: MouseEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onMouseOut(handler: (MouseEvent) -> Unit) { element.onmouseout = element.onmouseout?.let { { e: MouseEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onMouseOver(handler: (MouseEvent) -> Unit) { element.onmouseover = element.onmouseover?.let { { e: MouseEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onMouseUp(handler: (MouseEvent) -> Unit) { element.onmouseup = element.onmouseup?.let { { e: MouseEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onWheel(handler: (WheelEvent) -> Unit) { element.onwheel = element.onwheel?.let { { e: WheelEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onPause(handler: (Event) -> Unit) { element.onpause = element.onpause?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onProgress(handler: (ProgressEvent) -> Unit) { element.onprogress = element.onprogress?.let { { e: ProgressEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onRatechange(handler: (Event) -> Unit) { element.onratechange = element.onratechange?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onReset(handler: (Event) -> Unit) { element.onreset = element.onreset?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onResize(handler: (Event) -> Unit) { element.onresize = element.onresize?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onScroll(handler: (Event) -> Unit) { element.onscroll = element.onscroll?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onSeeked(handler: (Event) -> Unit) { element.onseeked = element.onseeked?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onSeeking(handler: (Event) -> Unit) { element.onseeking = element.onseeking?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onSelect(handler: (Event) -> Unit) { element.onselect = element.onselect?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onShow(handler: (Event) -> Unit) { element.onshow = element.onshow?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onStalled(handler: (Event) -> Unit) { element.onstalled = element.onstalled?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onSubmit(handler: (Event) -> Unit) { element.onsubmit = element.onsubmit?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onSuspend(handler: (Event) -> Unit) { element.onsuspend = element.onsuspend?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onTimeUpdate(handler: (Event) -> Unit) { element.ontimeupdate = element.ontimeupdate?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onToggle(handler: (Event) -> Unit) { element.ontoggle = element.ontoggle?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onVolumeChange(handler: (Event) -> Unit) { element.onvolumechange = element.onvolumechange?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onWaiting(handler: (Event) -> Unit) { element.onwaiting = element.onwaiting?.let { { e: Event -> it(e); handler(e) } } ?: handler }
+fun DomScope.onGotPointerCapture(handler: (PointerEvent) -> Unit) { element.ongotpointercapture = element.ongotpointercapture?.let { { e: PointerEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onLostPointerCapture(handler: (PointerEvent) -> Unit) { element.onlostpointercapture = element.onlostpointercapture?.let { { e: PointerEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onPointerDown(handler: (PointerEvent) -> Unit) { element.onpointerdown = element.onpointerdown?.let { { e: PointerEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onPointerMove(handler: (PointerEvent) -> Unit) { element.onpointermove = element.onpointermove?.let { { e: PointerEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onPointerUp(handler: (PointerEvent) -> Unit) { element.onpointerup = element.onpointerup?.let { { e: PointerEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onPointerCancel(handler: (PointerEvent) -> Unit) { element.onpointercancel = element.onpointercancel?.let { { e: PointerEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onPointerOver(handler: (PointerEvent) -> Unit) { element.onpointerover = element.onpointerover?.let { { e: PointerEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onPointerOut(handler: (PointerEvent) -> Unit) { element.onpointerout = element.onpointerout?.let { { e: PointerEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onPointerEnter(handler: (PointerEvent) -> Unit) { element.onpointerenter = element.onpointerenter?.let { { e: PointerEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onPointerLeave(handler: (PointerEvent) -> Unit) { element.onpointerleave = element.onpointerleave?.let { { e: PointerEvent -> it(e); handler(e) } } ?: handler }
+fun DomScope.onError(handler: (Any?, String, Int, Int, Any?) -> Unit) { element.onerror = element.onerror?.let { { a0: Any?, a1: String, a2: Int, a3: Int, a4: Any? -> it(a0, a1, a2, a3, a4); handler(a0, a1, a2, a3, a4) } } ?: handler }
