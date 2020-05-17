@@ -1,2 +1,2 @@
 # dom-scope
-Kotlin JS library for single-page applications
+A Kotlin JS library for creating single-page applications.
