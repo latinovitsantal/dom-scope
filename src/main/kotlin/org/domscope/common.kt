@@ -1,4 +1,4 @@
-package latinovitsantal.domscope
+package org.domscope
 
 import org.w3c.dom.css.CSSStyleDeclaration
 import kotlin.dom.appendText

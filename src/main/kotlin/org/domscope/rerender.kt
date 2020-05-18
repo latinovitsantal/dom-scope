@@ -1,4 +1,4 @@
-package latinovitsantal.domscope
+package org.domscope
 
 import org.w3c.dom.HTMLElement
 import kotlin.reflect.KMutableProperty0
@@ -37,7 +37,8 @@ private class KPropertyState<V>(private val prop: KMutableProperty0<V>): State<V
     set(value) { prop.set(value) }
 }
 
-fun <V> KMutableProperty0<V>.toState(): State<V> = KPropertyState(this)
+fun <V> KMutableProperty0<V>.toState(): State<V> =
+  KPropertyState(this)
 
 interface Component {
   val isAttached: Boolean
@@ -61,7 +62,8 @@ private class ComponentImpl : Component {
   }
 }
 
-private val component = Scope.value<ComponentImpl?> { null }
+private val component =
+  Scope.value<ComponentImpl?> { null }
 
 private fun <E: HTMLElement> IDomScope<E>.component(tagName: String, effDeps: Deps, ext: Ext<E>) {
   val component = component()?.createChild() ?: ComponentImpl()
