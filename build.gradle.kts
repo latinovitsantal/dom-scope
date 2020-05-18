@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.github.latinovitsantal"
-version = "0.0.1"
+version = "0.0.3"
 
 repositories {
     mavenCentral()
