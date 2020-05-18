@@ -66,7 +66,7 @@ private class ComponentImpl : Component {
 private val component =
   Scope.value<ComponentImpl?> { null }
 
-private fun <E: HTMLElement> IDomScope<E>.component(tagName: String, className: String?, effDeps: Deps, ext: Ext<E>) {
+private fun <E: HTMLElement> IDomScope<E>.component(tagName: String, effDeps: Deps, ext: Ext<E>) {
   val component = component()?.createChild() ?: ComponentImpl()
   component(component)
   ext()
@@ -74,19 +74,22 @@ private fun <E: HTMLElement> IDomScope<E>.component(tagName: String, className: 
   effDeps.forEach {
     it.subscribe(component) {
       component.detach()
-      replaceElement<E>(tagName, className) {
-        component(tagName, className, effDeps, ext)
+      replaceElement<E>(tagName) {
+        component(tagName, effDeps, ext)
       }
     }
   }
 }
 
-fun <E: HTMLElement> DomScope.element(name: String, deps: Deps, className: String?, ext: Ext<E>) {
-  element<E>(name, className) {
+fun <E: HTMLElement> DomScope.element(name: String, deps: Deps, ext: Ext<E>) {
+  element<E>(name) {
     val effDeps = deps.toEffectiveDeps()
-    if (effDeps.any()) component(name, className, effDeps, ext.unsafeCast<Ext<*>>()) else ext()
+    if (effDeps.any()) component(name, effDeps, ext.unsafeCast<Ext<*>>()) else ext()
   }
 }
+
+fun <E: HTMLElement> DomScope.element(name: String, className: String, deps: Deps, ext: Ext<E>) =
+  element<E>(name, deps) { element.className = className; ext() }
 
 fun DomScope.using(deps: Deps, action: () -> Unit) {
   action()

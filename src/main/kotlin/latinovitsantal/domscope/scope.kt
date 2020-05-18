@@ -84,20 +84,21 @@ fun <E: HTMLElement> domScope(element: E, ext: Ext<E>) = createMainScope(
   element
 ).ext()
 
-fun <C: HTMLElement> DomScope.element(elementName: String, className: String? = null, ext: Ext<C>) {
+fun <C: HTMLElement> DomScope.element(elementName: String, ext: Ext<C>) {
   val childElement = document.createElement(elementName).unsafeCast<C>()
-  className?.let { childElement.className = it }
   createChildScope(childElement).ext()
   element.appendChild(childElement)
 }
+
+fun <C: HTMLElement> DomScope.element(elementName: String, className: String, ext: Ext<C>) =
+  element<C>(elementName) { element.className = className; ext() }
 
 fun <E: HTMLElement> DomScope.replaceElement(newElement: E, ext: Ext<E>) {
   element.replaceWith(createChildScope(newElement).also(ext).element)
 }
 
-fun <E: HTMLElement> DomScope.replaceElement(elementName: String, className: String?, ext: Ext<E>) {
+fun <E: HTMLElement> DomScope.replaceElement(elementName: String, ext: Ext<E>) {
   val newElement = document.createElement(elementName).unsafeCast<E>()
-  className?.let { newElement.className = it }
   replaceElement(newElement, ext)
 }
 
