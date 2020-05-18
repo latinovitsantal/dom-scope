@@ -9,8 +9,7 @@ fun deps(vararg state: State<*>) = state.asSequence()
 
 fun Deps.toEffectiveDeps() = filterNot { (it.lastComponent as? ComponentImpl)?.isBeingRendered == true }
 
-fun <V> state(value: V): State<V> =
-  SimpleState(value)
+fun <V> state(value: V): State<V> = SimpleState(value)
 
 abstract class State<V> {
   private val subscriptions = mutableSetOf<() -> Unit>()
@@ -38,8 +37,7 @@ private class KPropertyState<V>(private val prop: KMutableProperty0<V>): State<V
     set(value) { prop.set(value) }
 }
 
-fun <V> KMutableProperty0<V>.toState(): State<V> =
-  KPropertyState(this)
+fun <V> KMutableProperty0<V>.toState(): State<V> = KPropertyState(this)
 
 interface Component {
   val isAttached: Boolean
@@ -63,8 +61,7 @@ private class ComponentImpl : Component {
   }
 }
 
-private val component =
-  Scope.value<ComponentImpl?> { null }
+private val component = Scope.value<ComponentImpl?> { null }
 
 private fun <E: HTMLElement> IDomScope<E>.component(tagName: String, effDeps: Deps, ext: Ext<E>) {
   val component = component()?.createChild() ?: ComponentImpl()

@@ -38,8 +38,7 @@ interface ScopeExtender<out S: Scope> {
   operator fun <V> Property<V>.invoke(value: V, extension: S.() -> Unit)
 }
 
-interface IDomScope<out E: HTMLElement>: Scope,
-  ScopeExtender<IDomScope<E>> {
+interface IDomScope<out E: HTMLElement> : Scope, ScopeExtender<IDomScope<E>> {
   val element: E
   fun <C: HTMLElement> createChildScope(childElement: C): IDomScope<C>
 }
@@ -56,19 +55,12 @@ private class Entry(private val key: Property<*>, private val value: Any?, val n
   }
 }
 
-private class DomScopeImpl<E: HTMLElement>(override val element: E, var entry: Entry?) :
-  IDomScope<E> {
+private class DomScopeImpl<E: HTMLElement>(override val element: E, var entry: Entry?) : IDomScope<E> {
   override fun <V> Property<V>.orNull(): V? = entry?.get(this).unsafeCast<V?>()
   override fun <V> Property<V>.invoke(): V = (entry?.get(this) ?: default(this@DomScopeImpl)).unsafeCast<V>()
-  override fun <V> Property<V>.invoke(value: V) { entry =
-    Entry(this, value, entry)
-  }
-  override fun <C : HTMLElement> createChildScope(childElement: C) =
-    DomScopeImpl(childElement, entry)
-  override fun scope(extension: IDomScope<E>.() -> Unit) = DomScopeImpl(
-    element,
-    entry
-  ).extension()
+  override fun <V> Property<V>.invoke(value: V) { entry = Entry(this, value, entry) }
+  override fun <C : HTMLElement> createChildScope(childElement: C) = DomScopeImpl(childElement, entry)
+  override fun scope(extension: IDomScope<E>.() -> Unit) = DomScopeImpl(element, entry).extension()
   override fun <V> Property<V>.invoke(value: V, extension: IDomScope<E>.() -> Unit) {
     scope {
       invoke(value)
@@ -77,12 +69,9 @@ private class DomScopeImpl<E: HTMLElement>(override val element: E, var entry: E
   }
 }
 
-fun <E: HTMLElement> createMainScope(element: E): IDomScope<E> =
-  DomScopeImpl(element, null)
+fun <E: HTMLElement> createMainScope(element: E): IDomScope<E> = DomScopeImpl(element, null)
 
-fun <E: HTMLElement> domScope(element: E, ext: Ext<E>) = createMainScope(
-  element
-).ext()
+fun <E: HTMLElement> domScope(element: E, ext: Ext<E>) = createMainScope(element).ext()
 
 fun <C: HTMLElement> DomScope.element(elementName: String, ext: Ext<C>) {
   val childElement = document.createElement(elementName).unsafeCast<C>()

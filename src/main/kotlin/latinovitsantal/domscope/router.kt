@@ -12,12 +12,9 @@ fun queryString(vararg pairs: Pair<String, String>) = pairs.joinToString("&") { 
 }
 
 private fun noRouterError(): Nothing = error("There is no router in the scope")
-val router =
-  Scope.value<Router> { noRouterError() }
-val routeParams =
-  Scope.value<PathParams> { noRouterError() }
-val routeQueryParams =
-  Scope.value<QueryParams> { noRouterError() }
+val router = Scope.value<Router> { noRouterError() }
+val routeParams = Scope.value<PathParams> { noRouterError() }
+val routeQueryParams = Scope.value<QueryParams> { noRouterError() }
 
 fun DomScope.router(defRoutes: (@ScopeDsl DefRoutes).() -> Unit) {
   val routes = Routes().also(defRoutes)
@@ -52,11 +49,7 @@ class Routes : DefRoutes {
         pathParts[1].split('&').associate { it.split('=')
           .let { (key, value) -> key.uriDecoded() to value.uriDecoded() } }
       else mapOf()
-    return RouteMatch(
-      route,
-      PathParams(params),
-      QueryParams(queryParams)
-    )
+    return RouteMatch(route, PathParams(params), QueryParams(queryParams))
   }
 }
 
