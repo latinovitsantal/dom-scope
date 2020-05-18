@@ -1,6 +1,6 @@
 plugins {
     id("org.jetbrains.kotlin.js") version "1.3.72"
-    maven
+    `maven-publish`
 }
 
 group = "com.github.latinovitsantal"
