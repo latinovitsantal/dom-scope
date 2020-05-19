@@ -12,14 +12,11 @@ fun queryString(vararg pairs: Pair<String, String>) = pairs.joinToString("&") { 
 }
 
 private fun noRouterError(): Nothing = error("There is no router in the scope")
-val router =
-  Scope.value<Router> { noRouterError() }
-val routeParams =
-  Scope.value<PathParams> { noRouterError() }
-val routeQueryParams =
-  Scope.value<QueryParams> { noRouterError() }
+val router = Scope.value<Router> { noRouterError() }
+val routeParams = Scope.value<PathParams> { noRouterError() }
+val routeQueryParams = Scope.value<QueryParams> { noRouterError() }
 
-fun DomScope.router(defRoutes: (@ScopeDsl DefRoutes).() -> Unit) {
+fun IDomScope<Div>.router(defRoutes: (@ScopeDsl DefRoutes).() -> Unit) {
   val routes = Routes().also(defRoutes)
   val routeMatch = state(routes.match(window.location.pathname))
   val onPopState = { _: PopStateEvent -> routeMatch.value = routes.match(window.location.pathname) }
@@ -91,7 +88,7 @@ class Route(val title: String, pathPattern: String, val extendDivScope: Ext<Div>
     return result
   }
 }
-class PathParams(pathParams: Map<String, String>): Map<String, String> by pathParams
 
+class PathParams(pathParams: Map<String, String>): Map<String, String> by pathParams
 class QueryParams(queryParams: Map<String, String>): Map<String, String> by queryParams
 data class RouteMatch(val route: Route, val params: PathParams, val queryParams: QueryParams)
