@@ -12,7 +12,7 @@ fun queryString(vararg pairs: Pair<String, String>) = pairs.joinToString("&") { 
 }
 
 private fun noRouterError(): Nothing = error("There is no router in the scope")
-val router = Scope.value<Router> { noRouterError() }
+val routerObject = Scope.value<Router> { noRouterError() }
 val routeParams = Scope.value<PathParams> { noRouterError() }
 val routeQueryParams = Scope.value<QueryParams> { noRouterError() }
 
@@ -23,7 +23,7 @@ fun IDomScope<Div>.router(tagName: TagName<*>, defRoutes: (@ScopeDsl DefRoutes).
   window.onpopstate = onPopState
   tagName(deps(routeMatch)) {
     val (route, params, queryParams) = routeMatch.value
-    router(Router(routes, routeMatch))
+    routerObject(Router(routes, routeMatch))
     routeParams(params)
     routeQueryParams(queryParams)
     route.extendScope(this)
