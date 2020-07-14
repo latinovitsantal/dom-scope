@@ -3,8 +3,6 @@ package org.domscope
 import org.w3c.dom.*
 import kotlin.browser.*
 
-private typealias Div = HTMLDivElement
-
 private fun String.uriEncoded() = window.asDynamic().encodeURIComponent(this) as String
 private fun String.uriDecoded() = window.asDynamic().decodeURIComponent(this) as String
 fun queryString(vararg pairs: Pair<String, String>) = pairs.joinToString("&") { (key, value) ->
@@ -16,7 +14,7 @@ val routerObject = Scope.value<Router> { noRouterError() }
 val routeParams = Scope.value<PathParams> { noRouterError() }
 val routeQueryParams = Scope.value<QueryParams> { noRouterError() }
 
-fun IDomScope<Div>.router(tagName: TagName<*> = Html.div, defRoutes: (@ScopeDsl DefRoutes).() -> Unit) {
+fun DomScope.router(tagName: TagName<*> = Html.div, defRoutes: (@ScopeDsl DefRoutes).() -> Unit) {
   val routes = Routes().also(defRoutes)
   val routeMatch = state(routes.match(window.location.pathname))
   val onPopState = { _: PopStateEvent -> routeMatch.value = routes.match(window.location.pathname) }
