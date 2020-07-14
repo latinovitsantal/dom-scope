@@ -16,27 +16,27 @@ val router = Scope.value<Router> { noRouterError() }
 val routeParams = Scope.value<PathParams> { noRouterError() }
 val routeQueryParams = Scope.value<QueryParams> { noRouterError() }
 
-fun IDomScope<Div>.router(defRoutes: (@ScopeDsl DefRoutes).() -> Unit) {
+fun IDomScope<Div>.router(tagName: TagName<*>, defRoutes: (@ScopeDsl DefRoutes).() -> Unit) {
   val routes = Routes().also(defRoutes)
   val routeMatch = state(routes.match(window.location.pathname))
   val onPopState = { _: PopStateEvent -> routeMatch.value = routes.match(window.location.pathname) }
   window.onpopstate = onPopState
-  div(deps(routeMatch)) {
+  tagName(deps(routeMatch)) {
     val (route, params, queryParams) = routeMatch.value
     router(Router(routes, routeMatch))
     routeParams(params)
     routeQueryParams(queryParams)
-    route.extendDivScope(this)
+    route.extendScope(this)
   }
 }
 
 interface DefRoutes {
-  fun route(path: String, title: String = path, extendDivScope: Ext<Div>)
+  fun route(path: String, title: String = path, extendDivScope: Ext<*>)
 }
 
 class Routes : DefRoutes {
   private val routes = mutableListOf<Route>()
-  override fun route(path: String, title: String, extendDivScope: Ext<Div>) {
+  override fun route(path: String, title: String, extendDivScope: Ext<*>) {
     routes.add(Route(title, path, extendDivScope))
   }
   fun match(path: String): RouteMatch {
@@ -73,7 +73,7 @@ class Router(private val routes: Routes, private val routeMatch: State<RouteMatc
   }
 }
 
-class Route(val title: String, pathPattern: String, val extendDivScope: Ext<Div>) {
+class Route(val title: String, pathPattern: String, val extendScope: Ext<*>) {
   private val patternSegments = pathPattern.split('/')
   fun matchParams(path: String): Map<String, String>? {
     val segments = path.split('/')

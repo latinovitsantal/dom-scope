@@ -1,5 +1,6 @@
 package org.domscope
 
+import org.domscope.RerenderMode.Always
 import org.w3c.dom.HTMLElement
 import kotlin.browser.document
 
@@ -41,6 +42,42 @@ interface ScopeExtender<out S: Scope> {
 interface IDomScope<out E: HTMLElement> : Scope, ScopeExtender<IDomScope<E>> {
   val element: E
   fun <C: HTMLElement> createChildScope(childElement: C): IDomScope<C>
+
+  fun <C: HTMLElement> element(elementName: String, ext: Ext<C>) {
+    val childElement = document.createElement(elementName).unsafeCast<C>()
+    createChildScope(childElement).ext()
+    element.appendChild(childElement)
+  }
+
+  fun <C: HTMLElement> element(elementName: String, className: String, ext: Ext<C>) {
+    element<C>(elementName) { element.className = className; ext() }
+  }
+
+  fun <N: HTMLElement> replaceElement(newElement: N, parentScope: DomScope, ext: Ext<N>) {
+    element.replaceWith(parentScope.createChildScope(newElement).also(ext).element)
+  }
+
+  fun <N: HTMLElement> replaceElement(elementName: String, parentScope: DomScope, ext: Ext<N>) {
+    val newElement = document.createElement(elementName).unsafeCast<N>()
+    replaceElement(newElement, parentScope, ext)
+  }
+
+  operator fun <D: HTMLElement> TagName<D>.invoke(ext: Ext<D> = {}) {
+    element(tagName, ext)
+  }
+
+  operator fun <D: HTMLElement> TagName<D>.invoke(className: String, ext: Ext<D> = {}) {
+    element(tagName, className, ext)
+  }
+
+  operator fun <D: HTMLElement> TagName<D>.invoke(deps: Deps, rerenderMode: RerenderMode = Always, ext: Ext<D> = {}) {
+    element(tagName, deps, rerenderMode, ext)
+  }
+
+  operator fun <D: HTMLElement> TagName<D>.invoke(className: String, deps: Deps, rerenderMode: RerenderMode = Always, ext: Ext<D> = {}) {
+    element(tagName, className, deps, rerenderMode, ext)
+  }
+
 }
 
 private class Entry(private val key: Property<*>, private val value: Any?, val next: Entry?) {
@@ -72,22 +109,3 @@ private class DomScopeImpl<E: HTMLElement>(override val element: E, var entry: E
 fun <E: HTMLElement> createMainScope(element: E): IDomScope<E> = DomScopeImpl(element, null)
 
 fun <E: HTMLElement> domScope(element: E, ext: Ext<E>) = createMainScope(element).ext()
-
-fun <C: HTMLElement> DomScope.element(elementName: String, ext: Ext<C>) {
-  val childElement = document.createElement(elementName).unsafeCast<C>()
-  createChildScope(childElement).ext()
-  element.appendChild(childElement)
-}
-
-fun <C: HTMLElement> DomScope.element(elementName: String, className: String, ext: Ext<C>) =
-  element<C>(elementName) { element.className = className; ext() }
-
-fun <E: HTMLElement> DomScope.replaceElement(newElement: E, parentScope: DomScope, ext: Ext<E>) {
-  element.replaceWith(parentScope.createChildScope(newElement).also(ext).element)
-}
-
-fun <E: HTMLElement> DomScope.replaceElement(elementName: String, parentScope: DomScope, ext: Ext<E>) {
-  val newElement = document.createElement(elementName).unsafeCast<E>()
-  replaceElement(newElement, parentScope, ext)
-}
-
