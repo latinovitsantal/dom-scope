@@ -16,7 +16,7 @@ val routerObject = Scope.value<Router> { noRouterError() }
 val routeParams = Scope.value<PathParams> { noRouterError() }
 val routeQueryParams = Scope.value<QueryParams> { noRouterError() }
 
-fun IDomScope<Div>.router(tagName: TagName<*>, defRoutes: (@ScopeDsl DefRoutes).() -> Unit) {
+fun IDomScope<Div>.router(tagName: TagName<*> = Html.div, defRoutes: (@ScopeDsl DefRoutes).() -> Unit) {
   val routes = Routes().also(defRoutes)
   val routeMatch = state(routes.match(window.location.pathname))
   val onPopState = { _: PopStateEvent -> routeMatch.value = routes.match(window.location.pathname) }
